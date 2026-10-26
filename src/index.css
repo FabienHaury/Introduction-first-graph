@@ -27,6 +27,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 @media (max-width: 1024px) {
   :root {
     font-size: 16px;
@@ -35,23 +39,18 @@
 
 body {
   margin: 0;
+  min-width: 0;
   background: var(--bg);
   color: var(--text);
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
-
-/* General headings */
 
 h1,
 h2 {
@@ -85,8 +84,6 @@ p {
   margin: 0;
 }
 
-/* Code */
-
 code,
 .counter {
   font-family: var(--mono);
@@ -102,24 +99,31 @@ code {
   background: var(--code-bg);
 }
 
-/* Chart header */
-
+/* Chart layout */
 
 .chart-container {
-  width: 800px;
-  max-width: 100%;
+  --chart-left-margin: 50px;
+
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .chart-header {
-  max-width: 800px;
+  width: min(100%, var(--chart-width, 600px));
   box-sizing: border-box;
   margin: 20px auto 16px;
-  padding-left: 50px;
-  padding-right: 24px;
+  padding-left: var(--chart-left-margin);
+  padding-right: 35px;
   text-align: left;
 }
 
+.barplot-wrapper {
+  width: min(100%, var(--chart-width, 600px));
+  margin: 0 auto;
+}
 
 .eyebrow {
   display: flex;
@@ -154,8 +158,7 @@ code {
   letter-spacing: -1.8px;
 }
 
-/* Subtitle and course link */
-
+/* Subtitle */
 
 .chart-subtitle {
   max-width: 800px;
@@ -171,7 +174,6 @@ code {
   white-space: nowrap;
 }
 
-
 .chart-subtitle a:hover {
   color: #8524d1;
   text-decoration: underline;
@@ -183,7 +185,8 @@ code {
 @media (max-width: 600px) {
   .chart-header {
     margin: 24px auto 16px;
-    padding: 0 20px;
+    padding-left: 50px;
+    padding-right: 20px;
   }
 
   .eyebrow {

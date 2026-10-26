@@ -1,34 +1,12 @@
+
 import * as d3 from "d3";
 
 const regionColors = {
-    "North America": "#C45B60", // Muted red
-    "South America": "#D9A441", // Soft gold
-    Europe: "#5286B4",           // Muted blue
-    Asia: "#8E79B8",             // Soft purple
-    Oceania: "#639B78",          // Muted green
-};
-
-const countryFlags = {
-    "United States": "🇺🇸",
-    France: "🇫🇷",
-    "United Kingdom": "🇬🇧",
-    Germany: "🇩🇪",
-    Switzerland: "🇨🇭",
-    Spain: "🇪🇸",
-    Netherlands: "🇳🇱",
-    India: "🇮🇳",
-    Singapore: "🇸🇬",
-    Ireland: "🇮🇪",
-    Sweden: "🇸🇪",
-    Australia: "🇦🇺",
-    Canada: "🇨🇦",
-    Finland: "🇫🇮",
-    Mexico: "🇲🇽",
-    Brazil: "🇧🇷",
-    "Saudi Arabia": "🇸🇦",
-    Romania: "🇷🇴",
-    Philippines: "🇵🇭",
-    "New Zealand": "🇳🇿",
+    "North America": "#C45B60",
+    "South America": "#D9A441",
+    Europe: "#5286B4",
+    Asia: "#8E79B8",
+    Oceania: "#639B78",
 };
 
 const countryCodes = {
@@ -54,9 +32,8 @@ const countryCodes = {
     "New Zealand": "nz",
 };
 
-export default function Barplot({ data }) {
-    const width = 600;
-    const height = 600;
+export default function Barplot({ data, width = 600 }) {
+    const height = 800;
 
     const margin = {
         top: 20,
@@ -68,35 +45,34 @@ export default function Barplot({ data }) {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    // Y scale: countries
     const yScale = d3
         .scaleBand()
         .domain(data.map((d) => d.country))
         .range([0, innerHeight])
         .padding(0.2);
 
-    // X scale: number of students
     const xScale = d3
         .scaleLinear()
         .domain([0, d3.max(data, (d) => d.students) || 0])
         .nice()
         .range([0, innerWidth]);
 
-    const xTicks = xScale.ticks(5);
     const regions = Object.keys(regionColors);
 
     return (
-        <div>
+        <div className="barplot-wrapper">
             <svg
                 width={width}
                 height={height}
+                viewBox={`0 0 ${width} ${height}`}
                 style={{
+                    display: "block",
                     background: "white",
+                    width: "100%",
+                    height: "auto",
                     overflow: "visible",
-                    maxWidth: "100%",
                 }}
             >
-                {/* Chart area */}
                 <g transform={`translate(${margin.left}, ${margin.top})`}>
                     {/* Bars */}
                     {data.map((d) => (
@@ -108,6 +84,8 @@ export default function Barplot({ data }) {
                                 height={yScale.bandwidth()}
                                 rx={4}
                                 fill={regionColors[d.region] || "#999"}
+                                stroke="black"
+                                strokeWidth={0.75}
                             />
 
                             {/* Student count */}
@@ -131,7 +109,6 @@ export default function Barplot({ data }) {
 
                         return (
                             <g key={d.country}>
-                                {/* Flag */}
                                 <image
                                     href={`https://flagcdn.com/w40/${countryCodes[d.country]}.png`}
                                     x={-25}
@@ -141,7 +118,6 @@ export default function Barplot({ data }) {
                                     preserveAspectRatio="xMidYMid meet"
                                 />
 
-                                {/* Country name */}
                                 <text
                                     x={-30}
                                     y={centerY}
@@ -156,16 +132,13 @@ export default function Barplot({ data }) {
                             </g>
                         );
                     })}
-
-
                 </g>
 
-                {/* Legend: bottom-right inside the SVG */}
+                {/* Legend */}
                 <g
                     transform={`translate(${width - margin.right - 155}, ${height - margin.bottom - 140
                         })`}
                 >
-                    {/* Legend background */}
                     <rect
                         width={155}
                         height={120}
@@ -175,7 +148,6 @@ export default function Barplot({ data }) {
                         stroke="#e5e7eb"
                     />
 
-                    {/* Legend title */}
                     <text
                         x={10}
                         y={18}
@@ -186,7 +158,6 @@ export default function Barplot({ data }) {
                         World regions
                     </text>
 
-                    {/* Legend items */}
                     {regions.map((region, i) => (
                         <g
                             key={region}

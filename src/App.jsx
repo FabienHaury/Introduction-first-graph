@@ -1,6 +1,8 @@
 import "flag-icons/css/flag-icons.min.css";
 import Barplot from "./Barplot";
 
+const chartWidth = 900;
+
 const data = [
   { country: "United States", students: 68, region: "North America" },
   { country: "France", students: 21, region: "Europe" },
@@ -25,9 +27,11 @@ const data = [
 ];
 
 export default function App() {
-
   return (
-    <div className="chart-container">
+    <div
+      className="chart-container"
+      style={{ "--chart-width": `${chartWidth}px` }}
+    >
       <header className="chart-header">
         <div className="eyebrow">
           <span className="eyebrow-dot" />
@@ -48,15 +52,11 @@ export default function App() {
         </p>
       </header>
 
-      <Barplot data={data} />
-
+      <Barplot data={data} width={chartWidth} />
 
       <footer className="site-footer">
         <span>Fabien Haury</span>
       </footer>
-
-
     </div>
   );
-
 }
