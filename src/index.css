@@ -102,10 +102,10 @@ code {
 /* Chart layout */
 
 .chart-container {
-  --chart-left-margin: 50px;
+  --chart-left-margin: 20px;
 
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -115,7 +115,7 @@ code {
   width: min(100%, var(--chart-width, 600px));
   box-sizing: border-box;
   margin: 20px auto 16px;
-  padding-left: var(--chart-left-margin);
+  padding-left: var(--chart-left-margin, 20px);
   padding-right: 35px;
   text-align: left;
 }
@@ -185,7 +185,7 @@ code {
 @media (max-width: 600px) {
   .chart-header {
     margin: 24px auto 16px;
-    padding-left: 50px;
+    padding-left: var(--chart-left-margin, 20px);
     padding-right: 20px;
   }
 
@@ -212,5 +212,5 @@ code {
   border-top: 1px solid var(--border);
   color: var(--text);
   font-size: 13px;
-  text-align: left;
+  text-align: center;
 }

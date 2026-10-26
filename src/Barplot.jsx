@@ -1,5 +1,6 @@
 
 import * as d3 from "d3";
+import { useLayoutEffect, useRef, useState } from "react";
 
 const regionColors = {
     "North America": "#C45B60",
@@ -32,17 +33,44 @@ const countryCodes = {
     "New Zealand": "nz",
 };
 
-export default function Barplot({ data, width = 600 }) {
+export default function Barplot({ data, width = 1000, leftMargin }) {
     const height = 800;
+    const marginRight = 35;
+    const marginTop = 20;
+    const marginBottom = 20;
+
+    const textRefs = useRef([]);
+    const [measuredLabelWidth, setMeasuredLabelWidth] = useState(0);
+
+    // Measure the actual width of the country labels.
+    useLayoutEffect(() => {
+        const maxWidth = Math.max(
+            0,
+            ...textRefs.current
+                .filter(Boolean)
+                .map((node) => node.getBBox().width)
+        );
+
+        setMeasuredLabelWidth(maxWidth);
+    }, [data]);
+
+    // Reserve space for the labels, flags, and a small gap.
+    const labelArea = Math.max(
+        leftMargin || 0,
+        measuredLabelWidth + 65,
+        180
+    );
 
     const margin = {
-        top: 20,
-        right: 35,
-        bottom: 40,
-        left: 50,
+        top: marginTop,
+        right: marginRight,
+        bottom: marginBottom,
+        left: labelArea,
     };
 
-    const innerWidth = width - margin.left - margin.right;
+    // Keep the requested plotting width, plus space for labels.
+    const svgWidth = width + margin.left;
+    const innerWidth = width - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
     const yScale = d3
@@ -60,11 +88,18 @@ export default function Barplot({ data, width = 600 }) {
     const regions = Object.keys(regionColors);
 
     return (
-        <div className="barplot-wrapper">
+        <div
+            className="barplot-wrapper"
+            style={{
+                width: "100%",
+                maxWidth: `${svgWidth}px`,
+                margin: "0 auto",
+            }}
+        >
             <svg
-                width={width}
+                width={svgWidth}
                 height={height}
-                viewBox={`0 0 ${width} ${height}`}
+                viewBox={`0 0 ${svgWidth} ${height}`}
                 style={{
                     display: "block",
                     background: "white",
@@ -74,7 +109,7 @@ export default function Barplot({ data, width = 600 }) {
                 }}
             >
                 <g transform={`translate(${margin.left}, ${margin.top})`}>
-                    {/* Bars */}
+                    {/* Bars and student counts */}
                     {data.map((d) => (
                         <g key={d.country}>
                             <rect
@@ -88,13 +123,16 @@ export default function Barplot({ data, width = 600 }) {
                                 strokeWidth={0.75}
                             />
 
-                            {/* Student count */}
                             <text
                                 x={xScale(d.students) + 6}
-                                y={yScale(d.country) + yScale.bandwidth() / 2}
+                                y={
+                                    yScale(d.country) +
+                                    yScale.bandwidth() / 2
+                                }
                                 dominantBaseline="middle"
-                                fontSize={12}
+                                fontSize={14}
                                 fontWeight="bold"
+                                fontFamily="Verdana, sans-serif"
                                 fill="#213547"
                             >
                                 {d.students}
@@ -102,8 +140,8 @@ export default function Barplot({ data, width = 600 }) {
                         </g>
                     ))}
 
-                    {/* Country labels and flags */}
-                    {data.map((d) => {
+                    {/* Country flags and labels */}
+                    {data.map((d, i) => {
                         const centerY =
                             yScale(d.country) + yScale.bandwidth() / 2;
 
@@ -111,20 +149,24 @@ export default function Barplot({ data, width = 600 }) {
                             <g key={d.country}>
                                 <image
                                     href={`https://flagcdn.com/w40/${countryCodes[d.country]}.png`}
-                                    x={-25}
-                                    y={centerY - 12}
+                                    x={-28}
+                                    y={centerY - 10}
                                     width={20}
                                     height={20}
                                     preserveAspectRatio="xMidYMid meet"
                                 />
 
                                 <text
-                                    x={-30}
+                                    ref={(node) => {
+                                        textRefs.current[i] = node;
+                                    }}
+                                    x={-36}
                                     y={centerY}
                                     textAnchor="end"
                                     dominantBaseline="middle"
-                                    fontSize={16}
+                                    fontSize={20}
                                     fontWeight="bold"
+                                    fontFamily="Verdana, sans-serif"
                                     fill="#213547"
                                 >
                                     {d.country}
@@ -136,8 +178,10 @@ export default function Barplot({ data, width = 600 }) {
 
                 {/* Legend */}
                 <g
-                    transform={`translate(${width - margin.right - 155}, ${height - margin.bottom - 140
-                        })`}
+                    transform={`translate(
+                        ${svgWidth - marginRight - 155},
+                        ${height - marginBottom - 140}
+                    )`}
                 >
                     <rect
                         width={155}
@@ -151,8 +195,9 @@ export default function Barplot({ data, width = 600 }) {
                     <text
                         x={10}
                         y={18}
-                        fontSize={12}
+                        fontSize={16}
                         fontWeight="bold"
+                        fontFamily="Verdana, sans-serif"
                         fill="#213547"
                     >
                         World regions
@@ -173,7 +218,8 @@ export default function Barplot({ data, width = 600 }) {
                             <text
                                 x={20}
                                 y={10}
-                                fontSize={11}
+                                fontSize={14}
+                                fontFamily="Verdana, sans-serif"
                                 fill="#374151"
                             >
                                 {region}

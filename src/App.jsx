@@ -1,7 +1,7 @@
 import "flag-icons/css/flag-icons.min.css";
 import Barplot from "./Barplot";
 
-const chartWidth = 900;
+const chartWidth = 1000;
 
 const data = [
   { country: "United States", students: 68, region: "North America" },
@@ -26,11 +26,19 @@ const data = [
   { country: "New Zealand", students: 3, region: "Oceania" },
 ];
 
+const chartLeftMargin = Math.max(
+  20,
+  ...data.map((d) => d.country.length * 11 + 40)
+);
+
 export default function App() {
   return (
     <div
       className="chart-container"
-      style={{ "--chart-width": `${chartWidth}px` }}
+      style={{
+        "--chart-width": `${chartWidth}px`,
+        "--chart-left-margin": `${chartLeftMargin}px`,
+      }}
     >
       <header className="chart-header">
         <div className="eyebrow">
@@ -52,10 +60,23 @@ export default function App() {
         </p>
       </header>
 
-      <Barplot data={data} width={chartWidth} />
+      <Barplot
+        data={data}
+        width={chartWidth}
+        leftMargin={chartLeftMargin}
+      />
 
       <footer className="site-footer">
-        <span>Fabien Haury</span>
+        <span>
+          Fabien Haury 2026 for{" "}
+          <a
+            href="https://www.react-graph-gallery.com/react-d3-dataviz-course"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            react-d3-dataviz-course
+          </a>
+        </span>
       </footer>
     </div>
   );
