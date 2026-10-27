@@ -43,7 +43,7 @@ export default function App() {
       <header className="chart-header">
         <div className="eyebrow">
           <span className="eyebrow-dot" />
-          COURSE COHORT · GEOGRAPHIC BREAKDOWN
+          IN TODAY'S LESSON
         </div>
 
         <h1>Where our students come from</h1>

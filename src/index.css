@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Rock+Salt&family=Schoolbell&display=swap');
+
+
+
 :root {
   --text: #F5F0DF;
   --text-h: #FFF9E9;
@@ -104,12 +108,35 @@ code {
 .chart-container {
   --chart-left-margin: 20px;
 
-  width: 100%;
+  position: relative;
+  isolation: isolate;
+
+  width: calc(100% - 32px);
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 24px auto;
   display: flex;
   flex-direction: column;
+
+  border: 12px solid #80552F;
+  border-radius: 5px;
+  background: #244B3A;
+
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
 }
+
+/* Inner golden highlight on the wooden frame */
+
+.chart-container::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 2px solid #B88955;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Header */
 
 .chart-header {
   width: min(100%, var(--chart-width, 600px));
@@ -118,11 +145,6 @@ code {
   padding-left: var(--chart-left-margin, 20px);
   padding-right: 35px;
   text-align: left;
-}
-
-.barplot-wrapper {
-  width: min(100%, var(--chart-width, 600px));
-  margin: 0 auto;
 }
 
 .eyebrow {
@@ -145,25 +167,26 @@ code {
   background: var(--accent);
 }
 
-/* Main chart title */
+/* Main chalk-style title */
 
 .chart-header h1 {
-  max-width: 700px;
-  margin: 0 0 14px;
-  color: var(--text-h);
-  font-family: var(--heading);
-  font-size: clamp(34px, 4.5vw, 48px);
-  font-weight: 750;
-  line-height: 1.08;
-  letter-spacing: -1.8px;
+  font-family: 'Fredericka the Great', serif;
+  font-size: clamp(36px, 5vw, 50px);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: #FFF9E9;
+  margin: 0 0 10px;
 }
 
-/* Subtitle */
+
+/* Subtitle in handwritten Schoolbell */
 
 .chart-subtitle {
   max-width: 800px;
   color: var(--text);
-  font-size: 16px;
+  font-family: "Schoolbell", cursive;
+  font-size: 20px;
   line-height: 1.7;
 }
 
@@ -175,9 +198,63 @@ code {
 }
 
 .chart-subtitle a:hover {
-  color: #8524d1;
+  color: #D9E8B5;
   text-decoration: underline;
   text-decoration-thickness: 2px;
+}
+
+/* Graph layout */
+
+.barplot-wrapper {
+  width: min(100%, var(--chart-width, 600px));
+  margin: 0 auto;
+}
+
+/* Footer with chalk divider */
+
+.site-footer {
+  margin-top: auto;
+  padding: 20px 24px;
+  border-top: none;
+  position: relative;
+
+  color: #D0D8CE;
+  font-size: 13px;
+  text-align: center;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 3%;
+  width: 94%;
+  height: 3px;
+
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(245, 240, 223, 0.65) 3%,
+      rgba(255, 249, 233, 0.9) 25%,
+      rgba(245, 240, 223, 0.7) 65%,
+      rgba(255, 249, 233, 0.85) 96%,
+      transparent 100%);
+
+  border-radius: 50%;
+  filter: blur(0.35px);
+  opacity: 0.85;
+}
+
+.site-footer a {
+  color: #D9E8B5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 232, 181, 0.5);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: #FFF9E9;
 }
 
 /* Responsive layout */
@@ -195,35 +272,16 @@ code {
   }
 
   .chart-header h1 {
-    font-size: 30px;
-    letter-spacing: -1px;
+    font-size: 26px;
+    letter-spacing: 0;
+    line-height: 1.6;
   }
 
   .chart-subtitle {
     font-size: 14px;
   }
-}
 
-/* Footer */
-
-.site-footer {
-  margin-top: auto;
-  padding: 20px 24px;
-  border-top: 1px solid rgba(245, 240, 223, 0.25);
-  color: #D0D8CE;
-  font-size: 13px;
-  text-align: center;
-}
-
-.site-footer a {
-  color: #D9E8B5;
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: rgba(217, 232, 181, 0.5);
-  text-underline-offset: 3px;
-  transition: color 0.2s ease;
-}
-
-.site-footer a:hover {
-  color: #FFF9E9;
+  .site-footer {
+    padding: 18px 12px;
+  }
 }
