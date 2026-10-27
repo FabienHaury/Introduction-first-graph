@@ -97,7 +97,6 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
         ])
     );
 
-
     return (
         <div
             className="barplot-wrapper"
@@ -119,6 +118,7 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                     overflow: "visible",
                 }}
             >
+
                 <g transform={`translate(${margin.left}, ${margin.top})`}>
                     {/* Bars and student counts */}
                     {data.map((d) => (
@@ -187,10 +187,6 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                     })}
                 </g>
 
-
-
-
-
                 {/* Legend */}
                 <g
                     transform={`translate(
@@ -242,8 +238,6 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                         </g>
                     ))}
                 </g>
-
-
             </svg>
         </div>
     );
