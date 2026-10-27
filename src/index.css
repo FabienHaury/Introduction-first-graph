@@ -164,7 +164,7 @@ code {
   height: 8px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: var(--accent);
+  background: #C5A3D9;
 }
 
 /* Main chalk-style title */

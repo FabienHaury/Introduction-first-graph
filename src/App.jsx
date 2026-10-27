@@ -44,9 +44,10 @@ export default function App() {
         <div className="eyebrow">
           <span className="eyebrow-dot" />
           IN TODAY'S LESSON
+          <span className="eyebrow-dot" />
         </div>
 
-        <h1>Where our students come from</h1>
+        <h1>Where our students come from?</h1>
 
         <p className="chart-subtitle">
           Student enrollment by country in the first cohort of the{" "}

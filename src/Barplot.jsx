@@ -84,7 +84,19 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
         .nice()
         .range([0, innerWidth]);
 
+
     const regions = Object.keys(regionColors);
+
+    const regionTotals = Object.fromEntries(
+        regions.map((region) => [
+            region,
+            d3.sum(
+                data.filter((d) => d.region === region),
+                (d) => d.students
+            ),
+        ])
+    );
+
 
     return (
         <div
@@ -129,9 +141,9 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                                     yScale.bandwidth() / 2
                                 }
                                 dominantBaseline="middle"
-                                fontSize={14}
+                                fontSize={20}
                                 fontWeight="bold"
-                                fontFamily="Verdana, sans-serif"
+                                fontFamily="Schoolbell, cursive"
                                 fill="#F5F0DF"
                             >
                                 {d.students}
@@ -175,29 +187,32 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                     })}
                 </g>
 
+
+
+
+
                 {/* Legend */}
                 <g
                     transform={`translate(
-                        ${svgWidth - marginRight - 155},
-                        ${height - marginBottom - 140}
-                    )`}
+                    ${svgWidth - marginRight - 260},
+                    ${height - marginBottom - 220})`}
                 >
+
                     <rect
-                        width={155}
-                        height={120}
-                        rx={8}
+                        width={260}
+                        height={200}
+                        rx={10}
                         fill="#244B3A"
-                        fillOpacity={0.95}
-                        stroke="#A9B8A8"
-                        strokeOpacity={0.6}
+                        fillOpacity={0.97}
+                        stroke="none"
                     />
 
                     <text
-                        x={10}
-                        y={18}
-                        fontSize={16}
+                        x={16}
+                        y={34}
+                        fontSize={28}
                         fontWeight="bold"
-                        fontFamily="Verdana, sans-serif"
+                        fontFamily="'Fredericka the Great', serif"
                         fill="#F5F0DF"
                     >
                         World regions
@@ -206,20 +221,20 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                     {regions.map((region, i) => (
                         <g
                             key={region}
-                            transform={`translate(10, ${28 + i * 18})`}
+                            transform={`translate(16, ${58 + i * 30})`}
                         >
                             <rect
-                                width={12}
-                                height={12}
+                                width={22}
+                                height={22}
                                 rx={3}
                                 fill={regionColors[region]}
                             />
 
                             <text
-                                x={20}
-                                y={10}
-                                fontSize={14}
-                                fontFamily="Verdana, sans-serif"
+                                x={32}
+                                y={17}
+                                fontSize={22}
+                                fontFamily="Schoolbell, cursive"
                                 fill="#F5F0DF"
                             >
                                 {region}
@@ -227,6 +242,8 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                         </g>
                     ))}
                 </g>
+
+
             </svg>
         </div>
     );
