@@ -102,7 +102,7 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                 viewBox={`0 0 ${svgWidth} ${height}`}
                 style={{
                     display: "block",
-                    background: "white",
+                    background: "#244B3A",
                     width: "100%",
                     height: "auto",
                     overflow: "visible",
@@ -133,7 +133,7 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                                 fontSize={14}
                                 fontWeight="bold"
                                 fontFamily="Verdana, sans-serif"
-                                fill="#213547"
+                                fill="#F5F0DF"
                             >
                                 {d.students}
                             </text>
@@ -149,10 +149,10 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                             <g key={d.country}>
                                 <image
                                     href={`https://flagcdn.com/w40/${countryCodes[d.country]}.png`}
-                                    x={-28}
-                                    y={centerY - 10}
-                                    width={20}
-                                    height={20}
+                                    x={-32}
+                                    y={centerY - 15}
+                                    width={25}
+                                    height={25}
                                     preserveAspectRatio="xMidYMid meet"
                                 />
 
@@ -160,14 +160,14 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                                     ref={(node) => {
                                         textRefs.current[i] = node;
                                     }}
-                                    x={-36}
+                                    x={-38}
                                     y={centerY}
                                     textAnchor="end"
                                     dominantBaseline="middle"
                                     fontSize={20}
                                     fontWeight="bold"
                                     fontFamily="Verdana, sans-serif"
-                                    fill="#213547"
+                                    fill="#F5F0DF"
                                 >
                                     {d.country}
                                 </text>
@@ -187,9 +187,10 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                         width={155}
                         height={120}
                         rx={8}
-                        fill="white"
+                        fill="#244B3A"
                         fillOpacity={0.95}
-                        stroke="#e5e7eb"
+                        stroke="#A9B8A8"
+                        strokeOpacity={0.6}
                     />
 
                     <text
@@ -198,7 +199,7 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                         fontSize={16}
                         fontWeight="bold"
                         fontFamily="Verdana, sans-serif"
-                        fill="#213547"
+                        fill="#F5F0DF"
                     >
                         World regions
                     </text>
@@ -220,7 +221,7 @@ export default function Barplot({ data, width = 1000, leftMargin }) {
                                 y={10}
                                 fontSize={14}
                                 fontFamily="Verdana, sans-serif"
-                                fill="#374151"
+                                fill="#F5F0DF"
                             >
                                 {region}
                             </text>

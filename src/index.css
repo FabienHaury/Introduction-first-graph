@@ -1,10 +1,10 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
+  --text: #F5F0DF;
+  --text-h: #FFF9E9;
+  --bg: #244B3A;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
+  --accent: #D9E8B5;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
@@ -209,8 +209,21 @@ code {
 .site-footer {
   margin-top: auto;
   padding: 20px 24px;
-  border-top: 1px solid var(--border);
-  color: var(--text);
+  border-top: 1px solid rgba(245, 240, 223, 0.25);
+  color: #D0D8CE;
   font-size: 13px;
   text-align: center;
+}
+
+.site-footer a {
+  color: #D9E8B5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 232, 181, 0.5);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: #FFF9E9;
 }
